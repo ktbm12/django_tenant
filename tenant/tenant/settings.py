@@ -30,14 +30,31 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+SHARED_APPS = [
+    "django_tenants",
+"clients",
+    # ✅ Django auth MUST be in SHARED_APPS since User model is shared
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",  # ✅ Move sessions here too
+    "django.contrib.sites",
+    "django.contrib.admin",  # ✅ Move admin here if you want shared admin
+
+    # Your shared apps
+    "leinad_app.users",   # User, Enterprise, Domain (SHARED)
+    "leinad_app.app",     # DatabaseConnectionSetting
+
+    # Third-party (PUBLIC only)
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.mfa",
 ]
+
+TENANT_APPS = [
+    "emplaoyers",
+]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
